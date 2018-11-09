@@ -6,8 +6,7 @@ $(document).ready(function () {
         let codeToParse = $('#codePlaceholder').val();
         let parsedCode = parseCode(codeToParse);
         let codeAfterParse = restrictElements(parsedCode);
-        console.log(codeAfterParse);
-        //$('#parsedCode').val(JSON.stringify(parsedCode, null, 2));
+        $('#parsedCode').val(JSON.stringify(parsedCode, null, 2));
         var table = document.getElementById('main-table');
         addLine(table, 'var1', 'var2', 'var3', 'var4');
 
