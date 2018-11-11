@@ -53,11 +53,21 @@ function iterateBodyStatement(expression, elements, alternateIf) {
         extractVariableDeclaration(expression, elements);
     else if (expression.type === 'ExpressionStatement')
         extractExpressionStatement(expression, elements);
-    else if (expression.type === 'WhileStatement')
+    else
+        iterateBodyStatementCont(expression, elements, alternateIf);
+}
+
+function iterateBodyStatementCont(expression, elements, alternateIf) {
+    if (expression.type === 'WhileStatement')
         extractWhileStatement(expression, elements);
     else if (expression.type === 'IfStatement' && alternateIf === false)
         extractIfStatement(expression, elements);
-    else if (expression.type === 'IfStatement' && alternateIf === true)
+    else
+        iterateBodyStatementCont2(expression, elements, alternateIf);
+}
+
+function iterateBodyStatementCont2(expression, elements, alternateIf) {
+    if (expression.type === 'IfStatement' && alternateIf === true)
         extractIfElseStatement(expression, elements);
     else if (expression.type === 'ReturnStatement')
         extractReturnStatement(expression, elements);
