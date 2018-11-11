@@ -8,8 +8,6 @@ var lastTimeRunCount = 0;
 $(document).ready(function () {
     $('#codeSubmissionButton').click(() => {
         let table = document.getElementById('main-table');
-        if (numberOfUsage != 0)
-            cleanTable(table);
         let codeToParse = $('#codePlaceholder').val();
         let parsedCode = parseCode(codeToParse);
         $('#parsedCode').val(JSON.stringify(parsedCode, null, 2));
@@ -18,6 +16,8 @@ $(document).ready(function () {
 });
 
 function putResultInTable(parsedCode, table) {
+    if (numberOfUsage != 0)
+        cleanTable(table);
     let elements = [];
     restrictElements(parsedCode, elements);
     for (let element of elements) {
