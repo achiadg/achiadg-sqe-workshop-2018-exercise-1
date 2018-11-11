@@ -2,20 +2,38 @@ import $ from 'jquery';
 import {parseCode} from './code-analyzer';
 
 var count = 1;
+var numberOfUsage = 0;
+var lastTimeRunCount = 0;
 
 $(document).ready(function () {
     $('#codeSubmissionButton').click(() => {
+        let table = document.getElementById('main-table');
+        if (numberOfUsage != 0)
+            cleanTable(table);
         let codeToParse = $('#codePlaceholder').val();
         let parsedCode = parseCode(codeToParse);
         $('#parsedCode').val(JSON.stringify(parsedCode, null, 2));
-        let elements = [];
-        restrictElements(parsedCode, elements);
-        let table = document.getElementById('main-table');
-        for (let element of elements) {
-            addline(table, element.line, element.type, element.name, element.condition, element.value);
-        }
+        putResultInTable(parsedCode, table);
     });
 });
+
+function putResultInTable(parsedCode, table) {
+    let elements = [];
+    restrictElements(parsedCode, elements);
+    for (let element of elements) {
+        addline(table, element.line, element.type, element.name, element.condition, element.value);
+    }
+    numberOfUsage++;
+    lastTimeRunCount = count;
+    count = 1;
+}
+
+function cleanTable(table) {
+    let row;
+    for (row = lastTimeRunCount - 1; row >= 1; row--) {
+        table.deleteRow(row);
+    }
+}
 
 function restrictElements(parsedCode, elements) {
     let i;
@@ -66,16 +84,22 @@ function addline(table, v1, v2, v3, v4, v5) {
 }
 
 function extractValuesFromExpression(right) {
-    if (right.type === 'Literal')
-        return right.value.toString();
-    else if (right.type === 'Identifier')
-        return right.name;
+    var toRet = checkType(right);
+    if (toRet != undefined)
+        return toRet;
     else if (right.type === 'BinaryExpression')
         return extractValuesFromExpression(right.left) + '' + right.operator + '' + extractValuesFromExpression(right.right);
     else if (right.type === 'MemberExpression')
         return extractValuesFromExpression(right.object) + '[' + extractValuesFromExpression(right.property) + ']';
     else if (right.type === 'UnaryExpression')
         return right.operator + '' + extractValuesFromExpression(right.argument);
+}
+
+function checkType(right) {
+    if (right.type === 'Literal')
+        return right.value.toString();
+    else if (right.type === 'Identifier')
+        return right.name;
 }
 
 function extractFunctionDeclaration(expression, elements) {
