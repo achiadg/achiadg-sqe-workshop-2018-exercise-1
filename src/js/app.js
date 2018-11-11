@@ -124,26 +124,29 @@ function extractFunctionDeclaration(expression, elements) {
 
 function extractVariableDeclaration(expression, elements) {
     for (let declaration of expression.declarations) {
-        if (declaration.init != null) {
-            elements.push({
-                line: declaration.loc.start.line,
-                type: 'variable declaration',
-                name: declaration.id.name,
-                condition: '',
-                value: declaration.init.value
-            });
-        } else {
-            elements.push({
-                line: declaration.loc.start.line,
-                type: 'variable declaration',
-                name: declaration.id.name,
-                condition: '',
-                value: 'null (or nothing)'
-            });
-        }
+        extractEveryDeclaration(declaration, elements);
     }
 }
 
+function extractEveryDeclaration(declaration, elements) {
+    if (declaration.init != null) {
+        elements.push({
+            line: declaration.loc.start.line,
+            type: 'variable declaration',
+            name: declaration.id.name,
+            condition: '',
+            value: declaration.init.value
+        });
+    } else {
+        elements.push({
+            line: declaration.loc.start.line,
+            type: 'variable declaration',
+            name: declaration.id.name,
+            condition: '',
+            value: 'null (or nothing)'
+        });
+    }
+}
 function extractExpressionStatement(expression, elements) {
     var name = expression.expression.left.name;
     var value = extractValuesFromExpression(expression.expression.right);
