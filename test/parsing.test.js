@@ -1,4 +1,3 @@
-/* eslint-disable max-lines-per-function */
 import {elements, putResultInTable} from '../src/js/app';
 import assert from 'assert';
 import {parseCode} from '../src/js/code-analyzer';
@@ -105,74 +104,6 @@ describe('Check loop', () => {
         assert.deepEqual(
             elements,
             [{line: 1, type: 'while statement', name: '', condition: 'x<y', value: ''}]
-        );
-    });
-});
-
-describe('Check loop', () => {
-    it('complex loop declaration', () => {
-        putResultInTable(parseCode('while (low <= high) {\n' +
-            '   mid = (low + high)/2;\n' +
-            '}'));
-        assert.deepEqual(
-            elements,
-            [{line: 1, type: 'while statement', name: '', condition: 'low<=high', value: ''},
-                {line: 2, type: 'assignment expression', name: 'mid', condition: '', value: 'low+high/2'}
-            ]
-        );
-    });
-});
-
-describe('Check return statement', () => {
-    it('simple return statement', () => {
-        putResultInTable(parseCode('function f(x){\n' + '    return -1;\n' + '}'));
-        assert.deepEqual(
-            elements,
-            [{line: 1, type: 'function declaration', name: 'f', condition: '', value: ''},
-                {line: 1, type: 'variable declaration', name: 'x', condition: '', value: ''},
-                {line: 2, type: 'return statement', name: '', condition: '', value: '-1'}
-            ]
-        );
-    });
-});
-
-describe('Check all together', () => {
-    it('complex test!!', () => {
-        putResultInTable(parseCode('function binarySearch(X, V, n){\n' +
-            '    let low, high, mid;\n' +
-            '    low = 0;\n' +
-            '    high = n - 1;\n' +
-            '    while (low <= high) {\n' +
-            '        mid = (low + high)/2;\n' +
-            '        if (X < V[mid])\n' +
-            '            high = mid - 1;\n' +
-            '        else if (X > V[mid])\n' +
-            '            low = mid + 1;\n' +
-            '        else\n' +
-            '            return mid;\n' +
-            '    }\n' +
-            '    return -1;\n' +
-            '}'));
-        assert.deepEqual(
-            elements,
-            [{line: 1, type: 'function declaration', name: 'binarySearch', condition: '', value: ''},
-                {line: 1, type: 'variable declaration', name: 'X', condition: '', value: ''},
-                {line: 1, type: 'variable declaration', name: 'V', condition: '', value: ''},
-                {line: 1, type: 'variable declaration', name: 'n', condition: '', value: ''},
-                {line: 2, type: 'variable declaration', name: 'low', condition: '', value: 'null (or nothing)'},
-                {line: 2, type: 'variable declaration', name: 'high', condition: '', value: 'null (or nothing)'},
-                {line: 2, type: 'variable declaration', name: 'mid', condition: '', value: 'null (or nothing)'},
-                {line: 3, type: 'assignment expression', name: 'low', condition: '', value: '0'},
-                {line: 4, type: 'assignment expression', name: 'high', condition: '', value: 'n-1'},
-                {line: 5, type: 'while statement', name: '', condition: 'low<=high', value: ''},
-                {line: 6, type: 'assignment expression', name: 'mid', condition: '', value: 'low+high/2'},
-                {line: 7, type: 'if statement', name: '', condition: 'X<V[mid]', value: ''},
-                {line: 8, type: 'assignment expression', name: 'high', condition: '', value: 'mid-1'},
-                {line: 9, type: 'else if statement', name: '', condition: 'X>V[mid]', value: ''},
-                {line: 10, type: 'assignment expression', name: 'low', condition: '', value: 'mid+1'},
-                {line: 12, type: 'return statement', name: '', condition: '', value: 'mid'},
-                {line: 14, type: 'return statement', name: '', condition: '', value: '-1'}
-            ]
         );
     });
 });
