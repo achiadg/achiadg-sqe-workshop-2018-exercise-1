@@ -112,7 +112,7 @@ function extractEveryDeclaration(declaration, elements) {
             type: 'variable declaration',
             name: declaration.id.name,
             condition: '',
-            value: 'null (or nothing)'
+            value: 'null'
         });
     }
 }

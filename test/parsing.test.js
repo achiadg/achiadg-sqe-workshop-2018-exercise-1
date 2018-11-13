@@ -16,7 +16,7 @@ describe('Check variable declaration', () => {
         putResultInTable(parseCode('let x;'));
         assert.deepEqual(
             elements,
-            [{line: 1, type: 'variable declaration', name: 'x', condition: '', value: 'null (or nothing)'}]
+            [{line: 1, type: 'variable declaration', name: 'x', condition: '', value: 'null'}]
         );
     });
 });
@@ -89,9 +89,9 @@ describe('Check function declaration complex', () => {
                 {line: 1, type: 'variable declaration', name: 'x', condition: '', value: ''},
                 {line: 1, type: 'variable declaration', name: 'v', condition: '', value: ''},
                 {line: 1, type: 'variable declaration', name: 'n', condition: '', value: ''},
-                {line: 2, type: 'variable declaration', name: 'low', condition: '', value: 'null (or nothing)'},
-                {line: 2, type: 'variable declaration', name: 'high', condition: '', value: 'null (or nothing)'},
-                {line: 2, type: 'variable declaration', name: 'mid', condition: '', value: 'null (or nothing)'},
+                {line: 2, type: 'variable declaration', name: 'low', condition: '', value: 'null'},
+                {line: 2, type: 'variable declaration', name: 'high', condition: '', value: 'null'},
+                {line: 2, type: 'variable declaration', name: 'mid', condition: '', value: 'null'},
                 {line: 3, type: 'assignment expression', name: 'low', condition: '', value: '0'},
                 {line: 4, type: 'assignment expression', name: 'high', condition: '', value: 'n-1'}
             ]
@@ -159,9 +159,9 @@ describe('Check all together', () => {
                 {line: 1, type: 'variable declaration', name: 'X', condition: '', value: ''},
                 {line: 1, type: 'variable declaration', name: 'V', condition: '', value: ''},
                 {line: 1, type: 'variable declaration', name: 'n', condition: '', value: ''},
-                {line: 2, type: 'variable declaration', name: 'low', condition: '', value: 'null (or nothing)'},
-                {line: 2, type: 'variable declaration', name: 'high', condition: '', value: 'null (or nothing)'},
-                {line: 2, type: 'variable declaration', name: 'mid', condition: '', value: 'null (or nothing)'},
+                {line: 2, type: 'variable declaration', name: 'low', condition: '', value: 'null'},
+                {line: 2, type: 'variable declaration', name: 'high', condition: '', value: 'null'},
+                {line: 2, type: 'variable declaration', name: 'mid', condition: '', value: 'null'},
                 {line: 3, type: 'assignment expression', name: 'low', condition: '', value: '0'},
                 {line: 4, type: 'assignment expression', name: 'high', condition: '', value: 'n-1'},
                 {line: 5, type: 'while statement', name: '', condition: 'low<=high', value: ''},
