@@ -4,28 +4,36 @@ import {parseCode} from './code-analyzer';
 var count = 1;
 var numberOfUsage = 0;
 var lastTimeRunCount = 0;
+var elements = [];
+
+export {putResultInTableTest};
+export {elements};
 
 $(document).ready(function () {
     $('#codeSubmissionButton').click(() => {
-        let table = document.getElementById('main-table');
         let codeToParse = $('#codePlaceholder').val();
         let parsedCode = parseCode(codeToParse);
         $('#parsedCode').val(JSON.stringify(parsedCode, null, 2));
-        putResultInTable(parsedCode, table);
+        putResultInTable(parsedCode);
     });
 });
 
-function putResultInTable(parsedCode, table) {
+function putResultInTable(parsedCode) {
     if (numberOfUsage != 0)
-        cleanTable(table);
-    let elements = [];
+        cleanTable(document.getElementById('main-table'));
+    elements = [];
     restrictElements(parsedCode, elements);
     for (let element of elements) {
-        addline(table, element.line, element.type, element.name, element.condition, element.value);
+        addline(document.getElementById('main-table'), element.line, element.type, element.name, element.condition, element.value);
     }
     numberOfUsage++;
     lastTimeRunCount = count;
     count = 1;
+}
+
+function putResultInTableTest(parsedCode) {
+    elements = [];
+    restrictElements(parsedCode, elements);
 }
 
 function cleanTable(table) {

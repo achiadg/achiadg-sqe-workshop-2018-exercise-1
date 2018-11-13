@@ -9,7 +9,6 @@ describe('The javascript parser', () => {
             '":{"line":0,"column":0}}}'
         );
     });
-
     it('is parsing a simple variable declaration correctly', () => {
         assert.equal(
             JSON.stringify(parseCode('let a = 1;')),
