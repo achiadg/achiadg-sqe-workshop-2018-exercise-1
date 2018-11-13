@@ -15,7 +15,8 @@ describe('Check variable declaration', () => {
         putResultInTable(parseCode('let x;'));
         assert.deepEqual(
             elements,
-            [{line: 1, type: 'variable declaration', name: 'x', condition: '', value: ''}]
+            [{line: 1, type: 'variable declaration', name: 'x', condition: '', value: 'null (or nothing)'}]
         );
     });
 });
+
