@@ -49,6 +49,20 @@ function iterateBodyStatementCont2(expression, elements, alternateIf) {
         extractIfElseStatement(expression, elements);
     else if (expression.type === 'ReturnStatement')
         extractReturnStatement(expression, elements);
+    else if (expression.type === 'ForStatement')
+        extractForStatement(expression, elements);
+}
+
+function extractForStatement(expression, elements) {
+    var conditionFor = extractValuesFromExpression(expression.test);
+    elements.push({
+        line: expression.loc.start.line,
+        type: 'for statement',
+        condition: conditionFor,
+        name: '',
+        value: ''
+    });
+    restrictElements(expression.body, elements);
 }
 
 
@@ -117,11 +131,29 @@ function extractEveryDeclaration(declaration, elements) {
     }
 }
 function extractExpressionStatement(expression, elements) {
-    var name = expression.expression.left.name;
-    var value = extractValuesFromExpression(expression.expression.right);
+    var name, value, typeOfStatement;
+    if (expression.expression.left === null || expression.expression.left === undefined) {
+        if (expression.expression.name != null && expression.expression.name != undefined) {
+            name = expression.expression.name;
+            value = '';
+        } else {
+            value = expression.expression.value;
+            name = '';
+        }
+        typeOfStatement = 'expression statement';
+    }
+    else {
+        name = expression.expression.left.name;
+        value = extractValuesFromExpression(expression.expression.right);
+        typeOfStatement = 'assignment expression';
+    }
+    pushExpression(expression, typeOfStatement, name, value, elements);
+}
+
+function pushExpression(expression, typeOfStatement, name, value, elements) {
     elements.push({
         line: expression.loc.start.line,
-        type: 'assignment expression',
+        type: typeOfStatement,
         condition: '',
         name: name,
         value: value
